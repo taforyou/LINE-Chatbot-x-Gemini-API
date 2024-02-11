@@ -1,19 +1,32 @@
-# LINE Chatbot x Gemini API
-A repo of building Gen AI Chatbot with Gemini by using LINE Messaging API and Cloud Functions for Firebase 2nd Gen
+# LINE Chatbot x Gemini API - taforyou improvement
 
-## Prerequisites
-* [Node.js v18](https://nodejs.org) or higher
-* [Create a channel on the LINE Developers console](https://developers.line.biz/en/docs/messaging-api/getting-started/)
-* Create a Firebase project using the [Firebase Console](https://console.firebase.google.com) and select <b>Blaze plan</b>
+## Introduction
 
-## Cloud Functions for Firebase
-* Copy credentials and set them in Environment variable (.env)
-```
-CHANNEL_ACCESS_TOKEN=CHANNEL-ACCESS-TOKEN-OF-LINE-MESSAGING-API
-API_KEY=API-KEY-FROM-MAKERSUITE
-```
+This project enhances the functionality of a chat application by integrating Firestore for dynamic context awareness, adding quick replies for image requests, and preset prompts for specific actions. Additionally, it utilizes node-cache to temporarily store images awaiting user interaction.
 
-## Documentation
-* [LINE Messaging API](https://developers.line.biz/en/docs/messaging-api/overview)
-* [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/get-started)
-* [Gemini API](https://ai.google.dev/docs/gemini_api_overview)
+## Features
+
+### Dynamic Context with Firestore
+
+- Firestore Integration: Leverages Firestore to maintain chat history, enabling the application to understand the context dynamically within a defined period (default set to 120 seconds). This feature allows for more meaningful interactions by keeping track of recent exchanges.
+
+### Enhanced User Interactions
+
+- Quick Replies for Images: Implements quick reply functionality when users request images, streamlining the interaction and improving user experience.
+- Preset Prompts: Includes predefined prompts for actions such as "Analyze", "Describe", and "Extract", making it easier for users to engage with the application without having to formulate complex commands.
+
+### Temporary Image Storage
+
+- Node-Cache for Temporary Storage: Utilizes node-cache to store temporary images, awaiting postback actions from users. This approach reduces the need for immediate storage solutions and facilitates a smoother user interaction with multimedia content.
+
+## Setup and Testing
+
+- Local Testing: The application has been rigorously tested locally using the Firebase emulator, Cloudflare tunnel, and a personal domain to ensure stability and performance.
+
+## Additional Resources
+
+- For a demonstration of the local testing and deployment process, refer to this tweet by Wes Bos: https://twitter.com/wesbos/status/1634310926219333642
+
+### Contributing
+
+- Feel free to explore the code, suggest improvements, or contribute to the project. Your feedback and contributions are highly appreciated.
