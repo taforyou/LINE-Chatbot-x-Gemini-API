@@ -1,17 +1,18 @@
-const { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory  } = require("@google/generative-ai");
+/* eslint-disable max-len */
+const {GoogleGenerativeAI, HarmBlockThreshold, HarmCategory} = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 const textOnly = async (prompt) => {
   // For text-only input, use the gemini-pro model
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({model: "gemini-pro"});
   const result = await model.generateContent(prompt);
   return result.response.text();
 };
 
-const multimodal = async (imageBinary) => {
+const multimodal = async (imageBinary, prompt) => {
   // For text-and-image input (multimodal), use the gemini-pro-vision model
-  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-  const prompt = "Please help describe this picture.";
+  const model = genAI.getGenerativeModel({model: "gemini-pro-vision"});
+  // const prompt = "Extract all text from the provided image and present it in a well-formatted JSON structure.";
   const mimeType = "image/png";
 
   // Convert image binary to a GoogleGenerativeAI.Part object.
@@ -19,9 +20,9 @@ const multimodal = async (imageBinary) => {
     {
       inlineData: {
         data: Buffer.from(imageBinary, "binary").toString("base64"),
-        mimeType
-      }
-    }
+        mimeType,
+      },
+    },
   ];
 
   const safetySettings = [
@@ -48,32 +49,28 @@ const multimodal = async (imageBinary) => {
   return text;
 };
 
-const chat = async (prompt) => {
+const chat = async (prompt, chatHistory) => {
+  let previousKnownledge = JSON.stringify(chatHistory);
+  if (previousKnownledge === "{}") {
+    previousKnownledge = {
+      history: [
+        {
+          "role": "user",
+          "parts": "Hi",
+        },
+        {
+          "role": "model",
+          "parts": "I'm Chom, how may i help you today ?",
+        },
+      ],
+    };
+  }
   // For text-only input, use the gemini-pro model
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-  const chat = model.startChat({
-    history: [
-      {
-        role: "user",
-        parts: "Hi",
-      },
-      {
-        role: "model",
-        parts: "Hi! My name is Tee, a Tech Evangelist who is an expert in LINE API and love to contribute knowlede to developers communities.",
-      },
-      {
-        role: "user",
-        parts: "What kind of LINE APIs are currently available in Thailand?",
-      },
-      {
-        role: "model",
-        parts: "Currently, there are Messaging API, LIFF, LINE Login, LINE Beacon, LINE Notify, LINE Pay, and LINE MINI App that can be used in Thailand.",
-      }
-    ]
-  });
+  const model = genAI.getGenerativeModel({model: "gemini-pro"});
+  const chat = model.startChat(previousKnownledge);
 
   const result = await chat.sendMessage(prompt);
   return result.response.text();
 };
 
-module.exports = { textOnly, multimodal, chat };
+module.exports = {textOnly, multimodal, chat};
