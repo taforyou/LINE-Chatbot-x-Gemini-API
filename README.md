@@ -27,6 +27,10 @@ This project enhances the functionality of a chat application by integrating Fir
 
 - For a demonstration of the local testing and deployment process, refer to this tweet by Wes Bos: https://twitter.com/wesbos/status/1634310926219333642
 
-### Contributing
+## Live Testing
+
+- Add line OA : @561cepfe and try it by yourself (until free credit is gone)
+
+## Contributing
 
 - Feel free to explore the code, suggest improvements, or contribute to the project. Your feedback and contributions are highly appreciated.
