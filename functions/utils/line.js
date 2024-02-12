@@ -62,6 +62,15 @@ const quickReply = (token) => {
               "data": "extract",
             },
           },
+          {
+            "type": "action",
+            // "imageUrl": "https://source.unsplash.com/random/15×15",
+            "action": {
+              "type": "postback",
+              "label": "X3",
+              "data": "x3",
+            },
+          },
         ]},
     }]},
   });

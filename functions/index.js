@@ -60,6 +60,13 @@ exports.webhook = onRequest(async (req, res) => {
             const imageBinary = await myCache.get( "currentImage" );
             const msg = await gemini.multimodal(imageBinary, "Extract all text from the provided image and present it in a well-formatted JSON structure.");
             await line.reply(event.replyToken, [{type: "text", text: msg}]);
+          } else if (event.postback.data === "x3") {
+            const imageBinary = await myCache.get( "currentImage" );
+            const msg1 = await gemini.multimodal(imageBinary, "Analyze the image and summarize its key elements in a bullet-point list.");
+            const msg2 = await gemini.multimodal(imageBinary, "Please help describe this Image.");
+            const msg3 = await gemini.multimodal(imageBinary, "Extract all text from the provided image and present it in a well-formatted JSON structure.");
+            const msgAll = ["############\n Analyze Result :\n############\n" + msg1, " Describe Result :\n############\n" + msg2, " Extract Result :\n############\n" + msg3].join("\n############\n");
+            await line.reply(event.replyToken, [{type: "text", text: msgAll}]);
           }
           break;
         case "message":
